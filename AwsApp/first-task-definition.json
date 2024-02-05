@@ -1,79 +1,97 @@
 {
-    "taskDefinitionArn": "arn:aws:ecs:us-east-2:560345640735:task-definition/first-task-definition:1",
-    "containerDefinitions": [
+  "taskDefinitionArn": "arn:aws:ecs:ap-south-1:560345640735:task-definition/AwsApp1RecipeAppTaskDefinition92A9BDD7:1",
+  "containerDefinitions": [
+    {
+      "name": "AppContainerDefinition",
+      "image": "560345640735.dkr.ecr.ap-south-1.amazonaws.com/awsapp1:638427126643275061",
+      "cpu": 0,
+      "memory": 512,
+      "links": [],
+      "portMappings": [
         {
-            "name": "test-conainter-name",
-            "image": "nginx",
-            "cpu": 512,
-            "portMappings": [
-                {
-                    "name": "test-conainter-name-80-tcp",
-                    "containerPort": 80,
-                    "hostPort": 80,
-                    "protocol": "tcp",
-                    "appProtocol": "http"
-                }
-            ],
-            "essential": true,
-            "environment": [],
-            "environmentFiles": [],
-            "mountPoints": [],
-            "volumesFrom": [],
-            "ulimits": [],
-            "logConfiguration": {
-                "logDriver": "awslogs",
-                "options": {
-                    "awslogs-create-group": "true",
-                    "awslogs-group": "/ecs/first-task-definition",
-                    "awslogs-region": "us-east-2",
-                    "awslogs-stream-prefix": "ecs"
-                },
-                "secretOptions": []
-            }
+          "containerPort": 80,
+          "hostPort": 80,
+          "protocol": "tcp"
         }
-    ],
-    "family": "first-task-definition",
-    "executionRoleArn": "arn:aws:iam::560345640735:role/ecsTaskExecutionRole",
-    "networkMode": "awsvpc",
-    "revision": 1,
-    "volumes": [],
-    "status": "ACTIVE",
-    "requiresAttributes": [
-        {
-            "name": "com.amazonaws.ecs.capability.logging-driver.awslogs"
+      ],
+      "essential": true,
+      "entryPoint": [],
+      "command": [],
+      "environment": [],
+      "environmentFiles": [],
+      "mountPoints": [],
+      "volumesFrom": [],
+      "secrets": [],
+      "dnsServers": [],
+      "dnsSearchDomains": [],
+      "extraHosts": [],
+      "dockerSecurityOptions": [],
+      "dockerLabels": {},
+      "ulimits": [],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "AwsApp1-RecipeAppTaskDefinitionAppContainerDefinitionLogGroupB92358ED-T288qPdRZjQH",
+          "awslogs-region": "ap-south-1",
+          "awslogs-stream-prefix": "AwsApp1"
         },
-        {
-            "name": "ecs.capability.execution-role-awslogs"
-        },
-        {
-            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
-        },
-        {
-            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
-        },
-        {
-            "name": "ecs.capability.task-eni"
-        },
-        {
-            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.29"
-        }
-    ],
-    "placementConstraints": [],
-    "compatibilities": [
-        "EC2",
-        "FARGATE"
-    ],
-    "requiresCompatibilities": [
-        "EC2",
-        "FARGATE"
-    ],
-    "cpu": "512",
-    "memory": "1024",
-    "runtimePlatform": {
-        "cpuArchitecture": "X86_64",
-        "operatingSystemFamily": "LINUX"
+        "secretOptions": []
+      },
+      "systemControls": []
+    }
+  ],
+  "family": "AwsApp1RecipeAppTaskDefinition92A9BDD7",
+  "taskRoleArn": "arn:aws:iam::560345640735:role/AwsApp1-RecipeAppIAMTaskRole35276CAE-C46EJJVr0DoU",
+  "executionRoleArn": "arn:aws:iam::560345640735:role/AwsApp1-RecipeAppTaskDefinitionExecutionRole3EC094E-2xN1PL8bvbdA",
+  "networkMode": "awsvpc",
+  "revision": 1,
+  "volumes": [],
+  "status": "ACTIVE",
+  "requiresAttributes": [
+    {
+      "name": "com.amazonaws.ecs.capability.logging-driver.awslogs"
     },
-    "registeredAt": "2024-02-02T04:40:50.261Z",
-    "registeredBy": "arn:aws:iam::560345640735:root",
-    "tags": []
+    {
+      "name": "ecs.capability.execution-role-awslogs"
+    },
+    {
+      "name": "com.amazonaws.ecs.capability.ecr-auth"
+    },
+    {
+      "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
+    },
+    {
+      "name": "com.amazonaws.ecs.capability.docker-remote-api.1.17"
+    },
+    {
+      "name": "com.amazonaws.ecs.capability.task-iam-role"
+    },
+    {
+      "name": "ecs.capability.execution-role-ecr-pull"
+    },
+    {
+      "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
+    },
+    {
+      "name": "ecs.capability.task-eni"
+    }
+  ],
+  "placementConstraints": [],
+  "compatibilities": [
+    "EC2",
+    "FARGATE"
+  ],
+  "requiresCompatibilities": [
+    "FARGATE"
+  ],
+  "cpu": "256",
+  "memory": "512",
+  "registeredAt": "2024-02-05T06:53:29.249Z",
+  "registeredBy": "arn:aws:sts::560345640735:assumed-role/cdk-hnb659fds-cfn-exec-role-560345640735-ap-south-1/AWSCloudFormation",
+  "tags": [
+    {
+      "key": "aws-dotnet-deploy",
+      "value": "AspNetAppEcsFargate"
+    }
+  ]
 }
