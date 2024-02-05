@@ -3,6 +3,7 @@
   "containerDefinitions": [
     {
       "name": "awsapp1",
+      "image": "560345640735.dkr.ecr.ap-south-1.amazonaws.com/awsapp1:e8e31840be11d9f6c30358f1291e77421ae5cfba",
       "cpu": 256,
       "memory": 512,
       "memoryReservation": 256,
