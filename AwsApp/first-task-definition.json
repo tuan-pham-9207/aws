@@ -1,48 +1,42 @@
 {
-  "taskDefinitionArn": "arn:aws:ecs:ap-south-1:560345640735:task-definition/AwsApp1RecipeAppTaskDefinition92A9BDD7:1",
+  "taskDefinitionArn": "arn:aws:ecs:ap-south-1:560345640735:task-definition/task1:1",
   "containerDefinitions": [
     {
-      "name": "AppContainerDefinition",
-      "image": "560345640735.dkr.ecr.ap-south-1.amazonaws.com/awsapp1:638427126643275061",
-      "cpu": 0,
+      "name": "container1",
+      "image": "560345640735.dkr.ecr.ap-south-1.amazonaws.com/aws-repository",
+      "cpu": 256,
       "memory": 512,
-      "links": [],
+      "memoryReservation": 256,
       "portMappings": [
         {
+          "name": "container1-80-tcp",
           "containerPort": 80,
           "hostPort": 80,
-          "protocol": "tcp"
+          "protocol": "tcp",
+          "appProtocol": "http"
         }
       ],
       "essential": true,
-      "entryPoint": [],
-      "command": [],
       "environment": [],
       "environmentFiles": [],
       "mountPoints": [],
       "volumesFrom": [],
-      "secrets": [],
-      "dnsServers": [],
-      "dnsSearchDomains": [],
-      "extraHosts": [],
-      "dockerSecurityOptions": [],
-      "dockerLabels": {},
       "ulimits": [],
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
-          "awslogs-group": "AwsApp1-RecipeAppTaskDefinitionAppContainerDefinitionLogGroupB92358ED-T288qPdRZjQH",
+          "awslogs-create-group": "true",
+          "awslogs-group": "/ecs/task1",
           "awslogs-region": "ap-south-1",
-          "awslogs-stream-prefix": "AwsApp1"
+          "awslogs-stream-prefix": "ecs"
         },
         "secretOptions": []
-      },
-      "systemControls": []
+      }
     }
   ],
-  "family": "AwsApp1RecipeAppTaskDefinition92A9BDD7",
-  "taskRoleArn": "arn:aws:iam::560345640735:role/AwsApp1-RecipeAppIAMTaskRole35276CAE-C46EJJVr0DoU",
-  "executionRoleArn": "arn:aws:iam::560345640735:role/AwsApp1-RecipeAppTaskDefinitionExecutionRole3EC094E-2xN1PL8bvbdA",
+  "family": "task1",
+  "taskRoleArn": "arn:aws:iam::560345640735:role/ecsTaskExecutionRole",
+  "executionRoleArn": "arn:aws:iam::560345640735:role/ecsTaskExecutionRole",
   "networkMode": "awsvpc",
   "revision": 1,
   "volumes": [],
@@ -61,7 +55,7 @@
       "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
     },
     {
-      "name": "com.amazonaws.ecs.capability.docker-remote-api.1.17"
+      "name": "com.amazonaws.ecs.capability.docker-remote-api.1.21"
     },
     {
       "name": "com.amazonaws.ecs.capability.task-iam-role"
@@ -74,6 +68,9 @@
     },
     {
       "name": "ecs.capability.task-eni"
+    },
+    {
+      "name": "com.amazonaws.ecs.capability.docker-remote-api.1.29"
     }
   ],
   "placementConstraints": [],
@@ -85,13 +82,12 @@
     "FARGATE"
   ],
   "cpu": "256",
-  "memory": "512",
-  "registeredAt": "2024-02-05T06:53:29.249Z",
-  "registeredBy": "arn:aws:sts::560345640735:assumed-role/cdk-hnb659fds-cfn-exec-role-560345640735-ap-south-1/AWSCloudFormation",
-  "tags": [
-    {
-      "key": "aws-dotnet-deploy",
-      "value": "AspNetAppEcsFargate"
-    }
-  ]
+  "memory": "2048",
+  "runtimePlatform": {
+    "cpuArchitecture": "X86_64",
+    "operatingSystemFamily": "LINUX"
+  },
+  "registeredAt": "2024-02-05T08:37:56.299Z",
+  "registeredBy": "arn:aws:iam::560345640735:root",
+  "tags": []
 }
