@@ -82,7 +82,7 @@ jobs:
       uses: aws-actions/amazon-ecs-render-task-definition@v1
       with:
         task-definition: ${{ env.ECS_TASK_DEFINITION }}
-        container-name: ${{ env.CONTAINER_NAME }}
+        container-name: container1
         image: 560345640735.dkr.ecr.ap-south-1.amazonaws.com/aws-repository
 
     - name: Deploy Amazon ECS task definition
