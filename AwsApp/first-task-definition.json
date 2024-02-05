@@ -1,5 +1,5 @@
 {
-  "taskDefinitionArn": "arn:aws:ecs:ap-south-1:560345640735:task-definition/first-task-definition:1",
+  "taskDefinitionArn": "arn:aws:ecs:ap-south-1:560345640735:task-definition/first-task-definition1:1",
   "containerDefinitions": [
     {
       "name": "awsapp1",
@@ -26,7 +26,7 @@
         "logDriver": "awslogs",
         "options": {
           "awslogs-create-group": "true",
-          "awslogs-group": "/ecs/first-task-definition",
+          "awslogs-group": "/ecs/first-task-definition1",
           "awslogs-region": "ap-south-1",
           "awslogs-stream-prefix": "ecs"
         },
@@ -34,8 +34,8 @@
       }
     }
   ],
-  "family": "first-task-definition",
-  "taskRoleArn": "arn:aws:iam::560345640735:role/AwsApp-RecipeAppIAMTaskRole35276CAE-uWaCXdVt3avw",
+  "family": "first-task-definition1",
+  "taskRoleArn": "arn:aws:iam::560345640735:role/ecsTaskExecutionRole",
   "executionRoleArn": "arn:aws:iam::560345640735:role/ecsTaskExecutionRole",
   "networkMode": "awsvpc",
   "revision": 1,
@@ -87,7 +87,7 @@
     "cpuArchitecture": "X86_64",
     "operatingSystemFamily": "LINUX"
   },
-  "registeredAt": "2024-02-05T07:16:04.383Z",
+  "registeredAt": "2024-02-05T07:26:29.436Z",
   "registeredBy": "arn:aws:sts::560345640735:assumed-role/AWSReservedSSO_AdministratorAccess_9101d21bc18846b7/tuanpv",
   "tags": []
 }
