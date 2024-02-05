@@ -31,13 +31,13 @@ on:
     branches: [ "main" ]
 
 env:
-  AWS_REGION: us-east-2                   # set this to your preferred AWS region, e.g. us-west-1
-  ECR_REPOSITORY: aws-repository           # set this to your Amazon ECR repository name
-  ECS_SERVICE: First-service                 # set this to your Amazon ECS service name
-  ECS_CLUSTER: second-cluster                 # set this to your Amazon ECS cluster name
+  AWS_REGION: ap-east-1                 # set this to your preferred AWS region, e.g. us-west-1
+  ECR_REPOSITORY: awsapp1          # set this to your Amazon ECR repository name
+  ECS_SERVICE: awsapp1-service                 # set this to your Amazon ECS service name
+  ECS_CLUSTER: awsapp1               # set this to your Amazon ECS cluster name
   ECS_TASK_DEFINITION: ./first-task-definition.json # set this to the path to your Amazon ECS task definition
                                                # file, e.g. .aws/task-definition.json
-  CONTAINER_NAME: test-conainter-name           # set this to the name of the container in the
+  CONTAINER_NAME: AppContainerDefinition           # set this to the name of the container in the
                                                # containerDefinitions section of your task definition
 
 permissions:

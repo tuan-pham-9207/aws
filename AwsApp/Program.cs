@@ -1,4 +1,7 @@
+using AwsApp.Middleware;
+
 var builder = WebApplication.CreateBuilder(args);
+var dateCreated = DateTime.UtcNow;
 
 // Add services to the container.
 
@@ -10,16 +13,26 @@ builder.Services.AddSwaggerGen();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+//if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+//app.UseMiddleware<VersionMiddleware>();
 
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapGet("/version", async (ctx) =>
+{
+  await  ctx.Response.WriteAsJsonAsync(new
+  {
+      version = 1,
+      date = dateCreated
+  });
+    ctx.RequestServices.GetService<ILogger<Program>>()?.LogInformation($"Version is {dateCreated}");
+});
 
 app.Run();
