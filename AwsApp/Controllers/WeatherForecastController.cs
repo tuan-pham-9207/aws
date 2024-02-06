@@ -70,6 +70,66 @@ namespace AwsApp.Controllers
             {
                 Console.WriteLine("123");
             }
+
+            var data = 0;
+            for (int i = 0; i < 10; i++)
+            {
+                data = data + i;
+            }
+
+            for (int i = 0; i < 10; i++)
+            {
+                data = data + i;
+            }
+
+            for (int i = 0; i < 10; i++)
+            {
+                data = data + i;
+            }
+
+            for (int i = 0; i < 10; i++)
+            {
+                data = data + i;
+            }
+
+            for (int i = 0; i < 10; i++)
+            {
+                data = data + i;
+            }
+
+            for (int i = 0; i < 10; i++)
+            {
+                data = data + i;
+            }
+
+            for (int i = 0; i < 10; i++)
+            {
+                data = data + i;
+            }
+
+            for (int i = 0; i < 10; i++)
+            {
+                data = data + i;
+            }
+
+            for (int i = 0; i < 10; i++)
+            {
+                data = data + i;
+            }
+
+            for (int i = 0; i < 10; i++)
+            {
+                data = data + i;
+            }
+
+            for (int i = 0; i < 10; i++)
+            {
+                data = data + i;
+            }
+            for (int i = 0; i < 10; i++)
+            {
+                data = data + i;
+            }
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
                 Date = DateTime.Now.AddDays(index),
@@ -78,5 +138,7 @@ namespace AwsApp.Controllers
             })
             .ToArray();
         }
+
+
     }
 }
