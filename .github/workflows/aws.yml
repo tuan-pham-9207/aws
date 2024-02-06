@@ -28,7 +28,7 @@ name: Deploy to Amazon ECS
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main","develop" ]
 
 env:
   AWS_REGION: ap-south-1                 # set this to your preferred AWS region, e.g. us-west-1
@@ -58,6 +58,11 @@ jobs:
       with:
         format: YYYYMMDD
         utcOffset: "+00:00"    
+
+    - name: Extract branch name
+      shell: bash
+      run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
+      id: extract_branch
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
@@ -76,7 +81,7 @@ jobs:
         IMAGE_TAG: ${{ github.sha }}
         CURRENT_DATE: $(date +'%Y%m%d')
         CURRENT_TIME: $(date +'%H%M%S')
-        BUILD_ID: dev${{ steps.current-time.outputs.formattedTime }}_${{ github.ref_slug }}_${{ github.run_number }}
+        BUILD_ID: dev${{ steps.current-time.outputs.formattedTime }}_${{ steps.extract_branch.outputs.branch }}_${{ github.run_number }}
       run: |
         # Build a docker container and
         # push it to ECR so that it can
