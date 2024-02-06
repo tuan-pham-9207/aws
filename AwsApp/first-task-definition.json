@@ -1,41 +1,57 @@
 {
-  "requiresCompatibilities": [
-    "FARGATE"
-  ],
-  "family": "task-definition-4",
+  "family": "AwsApp1RecipeAppTaskDefinition92A9BDD7",
   "containerDefinitions": [
     {
-      "name": "container-4",
-      "image": "560345640735.dkr.ecr.ap-south-1.amazonaws.com/repository-1",
-      "essential": true,
-      "cpu": 256,
+      "name": "AppContainerDefinition",
+      "image": "560345640735.dkr.ecr.ap-south-1.amazonaws.com/repository-1:638427800431374381",
+      "cpu": 0,
       "memory": 512,
-      "memoryReservation": 256,
+      "links": [],
       "portMappings": [
         {
-          "name": "nginx-80-tcp",
           "containerPort": 80,
           "hostPort": 80,
-          "protocol": "tcp",
-          "appProtocol": "http"
+          "protocol": "tcp"
         }
       ],
+      "essential": true,
+      "entryPoint": [],
+      "command": [],
+      "environment": [],
+      "environmentFiles": [],
+      "mountPoints": [],
+      "volumesFrom": [],
+      "secrets": [],
+      "dnsServers": [],
+      "dnsSearchDomains": [],
+      "extraHosts": [],
+      "dockerSecurityOptions": [],
+      "dockerLabels": {},
+      "ulimits": [],
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
-          "awslogs-create-group": "true",
-          "awslogs-group": "/ecs/task1",
+          "awslogs-group": "AwsApp1-RecipeAppTaskDefinitionAppContainerDefinitionLogGroupB92358ED-yTvh8UtJJ6Ak",
           "awslogs-region": "ap-south-1",
-          "awslogs-stream-prefix": "ecs"
+          "awslogs-stream-prefix": "AwsApp1"
         },
         "secretOptions": []
-      }
+      },
+      "systemControls": []
     }
   ],
-  "volumes": [],
+  "taskRoleArn": "arn:aws:iam::560345640735:role/AwsApp1-RecipeAppIAMTaskRole35276CAE-dGM9Jg62YUQo",
+  "executionRoleArn": "arn:aws:iam::560345640735:role/AwsApp1-RecipeAppTaskDefinitionExecutionRole3EC094E-4FkgSt3IvmwU",
   "networkMode": "awsvpc",
-  "memory": "0.5 GB",
-  "cpu": "0.25 vCPU",
-  "taskRoleArn": "arn:aws:iam::560345640735:role/ecsTaskExecutionRole",
-  "executionRoleArn": "arn:aws:iam::560345640735:role/ecsTaskExecutionRole"
+  "requiresCompatibilities": [
+    "FARGATE"
+  ],
+  "cpu": "256",
+  "memory": "512",
+  "tags": [
+    {
+      "key": "aws-dotnet-deploy",
+      "value": "AspNetAppEcsFargate"
+    }
+  ]
 }
