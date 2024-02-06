@@ -97,7 +97,7 @@ jobs:
     - name: Check SonarQube analysis status
       id: check-sonar
       run: |
-        SONAR_STATUS=$(curl -s -u ${{ secrets.SONAR_TOKEN }}: -X GET "https://sonarcloud.io/api/qualitygates/project_status?projectKey=tuan-pham-9207_test-repo" | jq -r .projectStatus.status)
+        SONAR_STATUS=$(curl -s -u ${{ secrets.SONAR_TOKEN }}: -X GET "https://sonarcloud.io/api/qualitygates/project_status?projectKey=tuan-pham-9207_aws" | jq -r .projectStatus.status)
         echo "SonarQube status: $SONAR_STATUS"
         echo "::set-output name=sonar_status::$SONAR_STATUS"
   deploy:
