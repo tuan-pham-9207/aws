@@ -102,6 +102,7 @@ jobs:
         echo "::set-output name=sonar_status::$SONAR_STATUS"
   deploy:
     name: Deploy
+    needs: sonarqube-check
     runs-on: ubuntu-latest
     environment: Development
 
