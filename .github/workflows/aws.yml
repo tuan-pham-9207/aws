@@ -44,6 +44,62 @@ permissions:
   contents: read
 
 jobs:
+  install-sonar:
+     name: Build and analyze
+     runs-on: ubuntu-latest
+     steps:
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: 'zulu'
+
+      - uses: actions/checkout@v2
+
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v2
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+
+      - name: Cache SonarCloud scanner
+        id: cache-sonar-scanner
+        uses: actions/cache@v2
+        with:
+          path: .sonar/scanner
+          key: ${{ runner.os }}-sonar-scanner
+          restore-keys: ${{ runner.os }}-sonar-scanner
+
+      - name: Install SonarCloud scanner
+        if: steps.cache-sonar-scanner.outputs.cache-hit != 'true'
+        run: |
+          mkdir -p .sonar/scanner
+          dotnet tool update dotnet-sonarscanner --tool-path .sonar/scanner
+
+      - name: Build and analyze
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          echo "Current directory: ${{ github.workspace }}"
+          .sonar/scanner/dotnet-sonarscanner begin /k:"tuan-pham-9207_aws" /o:"tuan-pham-9207" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
+        
+          # Replace the following with your actual build command
+          dotnet build --configuration Release ./AwsApp
+          
+          .sonar/scanner/dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
+  sonarqube-check:
+    needs: install-sonar
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check SonarQube analysis status
+      id: check-sonar
+      run: |
+        SONAR_STATUS=$(curl -s -u ${{ secrets.SONAR_TOKEN }}: -X GET "https://sonarcloud.io/api/qualitygates/project_status?projectKey=tuan-pham-9207_test-repo" | jq -r .projectStatus.status)
+        echo "SonarQube status: $SONAR_STATUS"
+        echo "::set-output name=sonar_status::$SONAR_STATUS"
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
