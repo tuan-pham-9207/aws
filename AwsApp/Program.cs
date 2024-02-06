@@ -29,7 +29,7 @@ app.MapGet("/version", async (ctx) =>
 {
   await  ctx.Response.WriteAsJsonAsync(new
   {
-      version = 1,
+      version = 2,
       date = dateCreated
   });
     ctx.RequestServices.GetService<ILogger<Program>>()?.LogInformation($"Version is {dateCreated}");
