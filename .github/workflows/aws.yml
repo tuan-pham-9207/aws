@@ -44,7 +44,7 @@ permissions:
   contents: read
 
 jobs:
-  install-sonar:
+  install-and-analysis-sonar:
      name: Build and analyze
      runs-on: ubuntu-latest
      steps:
@@ -87,11 +87,9 @@ jobs:
         
           # Replace the following with your actual build command
           dotnet build --configuration Release ./AwsApp
-          
           .sonar/scanner/dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
   deploy:
     name: Deploy
-    needs: sonarqube-check
     runs-on: ubuntu-latest
     environment: Development
 
