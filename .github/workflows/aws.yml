@@ -52,7 +52,12 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v3
-
+    - name: Get current time
+      uses: josStorer/get-current-time@v2
+      id: current-time
+      with:
+        format: YYYYMMDD
+        utcOffset: "+00:00"    
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
@@ -71,14 +76,13 @@ jobs:
         IMAGE_TAG: ${{ github.sha }}
         CURRENT_DATE: $(date +'%Y%m%d')
         CURRENT_TIME: $(date +'%H%M%S')
-        BUILD_ID: "dev${CURRENT_DATE}_${{ github.ref_slug }}_${CURRENT_TIME}_pt_${{ github.run_number }}"
-        
+        BUILD_ID: dev${{ steps.current-time.outputs.formattedTime }}_${{ github.ref_slug }}_${{ github.run_number }}
       run: |
         # Build a docker container and
         # push it to ECR so that it can
         # be deployed to ECS.
         echo "Build ID is $BUILD_ID"
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+        docker build1 -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
     - name: Download task definition
