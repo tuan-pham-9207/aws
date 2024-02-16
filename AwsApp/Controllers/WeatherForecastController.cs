@@ -21,115 +21,115 @@ namespace AwsApp.Controllers
         [HttpGet(Name = "GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
         {
-            var t = "";
-            if (t == "1")
-            {
-                if (t == "2")
-                {
-                    if (t == "3")
-                    {
-                        if (t == "4")
-                        {
-                            if (t == "5")
-                            {
-                                if (t == "6")
-                                {
-                                    Console.WriteLine("123");
-                                }
-                            }
-                            else
-                            {
-                                Console.WriteLine("12345");
-                            }
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine("1234");
-                    }
-                }
+            //var t = "";
+            //if (t == "1")
+            //{
+            //    if (t == "2")
+            //    {
+            //        if (t == "3")
+            //        {
+            //            if (t == "4")
+            //            {
+            //                if (t == "5")
+            //                {
+            //                    if (t == "6")
+            //                    {
+            //                        Console.WriteLine("123");
+            //                    }
+            //                }
+            //                else
+            //                {
+            //                    Console.WriteLine("12345");
+            //                }
+            //            }
+            //        }
+            //        else
+            //        {
+            //            Console.WriteLine("1234");
+            //        }
+            //    }
 
-            }
-            else if (t == "2")
-            {
-                Console.WriteLine("123");
-            }
-            else if (t == "3")
-            {
-                Console.WriteLine("123");
-            }
-            else if (t == "4")
-            {
-                Console.WriteLine("123");
-            }
-            else if (t == "5")
-            {
-                Console.WriteLine("123");
-            }
-            else if (t == "6")
-            {
-                Console.WriteLine("123");
-            }
+            //}
+            //else if (t == "2")
+            //{
+            //    Console.WriteLine("123");
+            //}
+            //else if (t == "3")
+            //{
+            //    Console.WriteLine("123");
+            //}
+            //else if (t == "4")
+            //{
+            //    Console.WriteLine("123");
+            //}
+            //else if (t == "5")
+            //{
+            //    Console.WriteLine("123");
+            //}
+            //else if (t == "6")
+            //{
+            //    Console.WriteLine("123");
+            //}
 
-            var data = 0;
-            for (int i = 0; i < 10; i++)
-            {
-                data = data + i;
-            }
+            //var data = 0;
+            //for (int i = 0; i < 10; i++)
+            //{
+            //    data = data + i;
+            //}
 
-            for (int i = 0; i < 10; i++)
-            {
-                data = data + i;
-            }
+            //for (int i = 0; i < 10; i++)
+            //{
+            //    data = data + i;
+            //}
 
-            for (int i = 0; i < 10; i++)
-            {
-                data = data + i;
-            }
+            //for (int i = 0; i < 10; i++)
+            //{
+            //    data = data + i;
+            //}
 
-            for (int i = 0; i < 10; i++)
-            {
-                data = data + i;
-            }
+            //for (int i = 0; i < 10; i++)
+            //{
+            //    data = data + i;
+            //}
 
-            for (int i = 0; i < 10; i++)
-            {
-                data = data + i;
-            }
+            //for (int i = 0; i < 10; i++)
+            //{
+            //    data = data + i;
+            //}
 
-            for (int i = 0; i < 10; i++)
-            {
-                data = data + i;
-            }
+            //for (int i = 0; i < 10; i++)
+            //{
+            //    data = data + i;
+            //}
 
-            for (int i = 0; i < 10; i++)
-            {
-                data = data + i;
-            }
+            //for (int i = 0; i < 10; i++)
+            //{
+            //    data = data + i;
+            //}
 
-            for (int i = 0; i < 10; i++)
-            {
-                data = data + i;
-            }
+            //for (int i = 0; i < 10; i++)
+            //{
+            //    data = data + i;
+            //}
 
-            for (int i = 0; i < 10; i++)
-            {
-                data = data + i;
-            }
+            //for (int i = 0; i < 10; i++)
+            //{
+            //    data = data + i;
+            //}
 
-            for (int i = 0; i < 10; i++)
-            {
-                data = data + i;
-            }
+            //for (int i = 0; i < 10; i++)
+            //{
+            //    data = data + i;
+            //}
 
-            for (int i = 0; i < 10; i++)
-            {
-                data = data + i;
-            }
-            for (int i = 0; i < 10; i++)
-            {
-                data = data + i;
-            }
+            //for (int i = 0; i < 10; i++)
+            //{
+            //    data = data + i;
+            //}
+            //for (int i = 0; i < 10; i++)
+            //{
+            //    data = data + i;
+            //}
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
                 Date = DateTime.Now.AddDays(index),
