@@ -73,9 +73,10 @@ jobs:
         aws-region: ${{ env.AWS_REGION }}
     - name: Run tests and generate coverage
       run: |
-        dotnet test --no-build --configuration Release /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura
-        dotnet tool install -g dotnet-coverage || true
-        dotnet coverage collect --format opencover -o coverage.opencover.xml
+        dotnet sonarscanner begin /k:"${{env.SONAR_PROJECT_KEY}}>"  /d:sonar.token="${{ secrets.SONAR_TOKEN }}"  /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml
+        dotnet build --no-incremental
+        dotnet-coverage collect "dotnet test" -f xml -o "coverage.xml"
+        dotnet sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
 
     - name: Check Code Coverage
       run: |
