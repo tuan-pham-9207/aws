@@ -73,6 +73,7 @@ jobs:
         aws-region: ${{ env.AWS_REGION }}
     - name: Run tests and generate coverage
       run: |
+        dotnet tool install --global dotnet-sonarscanner
         dotnet sonarscanner begin /k:"${{env.SONAR_PROJECT_KEY}}>"  /d:sonar.token="${{ secrets.SONAR_TOKEN }}"  /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml
         dotnet build --no-incremental
         dotnet tool install -g dotnet-coverage || true
