@@ -66,24 +66,24 @@ jobs:
         format: YYYYMMDD
         utcOffset: "+00:00"    
 
-    #- name: Extract branch name
-    #  shell: bash
-    #  run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
-    #  id: extract_branch
-    #- name: Configure AWS credentials
-    #  uses: aws-actions/configure-aws-credentials@v1
-    #  with:
-    #    aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-    #    aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-    #    aws-region: ${{ env.AWS_REGION }}
-    #- name: Run tests and generate coverage
-    #  run: |
-    #    dotnet tool install --global dotnet-sonarscanner
-    #    dotnet sonarscanner begin /k:"${{env.SONAR_PROJECT_KEY}}" /d:sonar.host.url="https://sonarcloud.io/" /o:"${{env.SONAR_ORG_KEY}}" /d:sonar.token="${{ secrets.SONAR_TOKEN }}"  /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml
-    #    dotnet build --no-incremental
-    #    dotnet tool install -g dotnet-coverage || true
-    #    dotnet-coverage collect "dotnet test" -f xml -o "coverage.xml"
-    #    dotnet sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
+    - name: Extract branch name
+      shell: bash
+      run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
+      id: extract_branch
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ env.AWS_REGION }}
+    - name: Run tests and generate coverage
+      run: |
+        dotnet tool install --global dotnet-sonarscanner
+        dotnet sonarscanner begin /k:"${{env.SONAR_PROJECT_KEY}}" /d:sonar.host.url="https://sonarcloud.io/" /o:"${{env.SONAR_ORG_KEY}}" /d:sonar.token="${{ secrets.SONAR_TOKEN }}"  /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml
+        dotnet build --no-incremental
+        dotnet tool install -g dotnet-coverage || true
+        dotnet-coverage collect "dotnet test" -f xml -o "coverage.xml"
+        dotnet sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
 
     #- name: Check Code Coverage
     #  run: |
