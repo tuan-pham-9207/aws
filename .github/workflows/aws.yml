@@ -75,7 +75,7 @@ jobs:
       run: |
         dotnet test --no-build --configuration Release /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura
         dotnet tool install -g dotnet-coverage || true
-        dotnet coverage collect --opencover -o coverage.opencover.xml
+        dotnet coverage collect --format opencover -o coverage.opencover.xml
 
     - name: Check Code Coverage
       run: |
