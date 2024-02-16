@@ -86,7 +86,7 @@ jobs:
         fi
     - name: Upload coverage to SonarQube
       run: |
-        dotnet-coverage sonarqube /k:"${{SONAR_PROJECT_KEY}}" /o:"${{SONAR_ORG_KEY}}" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.cs.opencover.reportsPaths="coverage.opencover.xml" /d:sonar.coverage.exclusions="**/*.Tests/**"
+        dotnet-coverage sonarqube /k:"${{env.SONAR_PROJECT_KEY}}" /o:"${{env.SONAR_ORG_KEY}}" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.cs.opencover.reportsPaths="coverage.opencover.xml" /d:sonar.coverage.exclusions="**/*.Tests/**"
 
     #- name: Login to Amazon ECR
     #  id: login-ecr
