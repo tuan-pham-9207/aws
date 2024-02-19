@@ -1,34 +1,8 @@
-# This workflow will build and push a new container image to Amazon ECR,
-# and then will deploy a new task definition to Amazon ECS, when there is a push to the "main" branch.
-#
-# To use this workflow, you will need to complete the following set-up steps:
-#
-# 1. Create an ECR repository to store your images.
-#    For example: `aws ecr create-repository --repository-name my-ecr-repo --region us-east-2`.
-#    Replace the value of the `ECR_REPOSITORY` environment variable in the workflow below with your repository's name.
-#    Replace the value of the `AWS_REGION` environment variable in the workflow below with your repository's region.
-#
-# 2. Create an ECS task definition, an ECS cluster, and an ECS service.
-#    For example, follow the Getting Started guide on the ECS console:
-#      https://us-east-2.console.aws.amazon.com/ecs/home?region=us-east-2#/firstRun
-#    Replace the value of the `ECS_SERVICE` environment variable in the workflow below with the name you set for the Amazon ECS service.
-#    Replace the value of the `ECS_CLUSTER` environment variable in the workflow below with the name you set for the cluster.
-#
-# 3. Store your ECS task definition as a JSON file in your repository.
-#    The format should follow the output of `aws ecs register-task-definition --generate-cli-skeleton`.
-#    Replace the value of the `ECS_TASK_DEFINITION` environment variable in the workflow below with the path to the JSON file.
-#    Replace the value of the `CONTAINER_NAME` environment variable in the workflow below with the name of the container
-#    in the `containerDefinitions` section of the task definition.
-#
-# 4. Store an IAM user access key in GitHub Actions secrets named `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`.
-#    See the documentation for each action used below for the recommended IAM policies for this IAM user,
-#    and best practices on handling the access key credentials.
-
-name: Deploy to Amazon ECS
+name: Analysis and Deploy to Amazon ECS
 
 on:
   push:
-    branches: [ "main","develop" ]
+    branches: [ "main","develop" ]    
 
 env:
   AWS_REGION: ap-south-1                 # set this to your preferred AWS region, e.g. us-west-1
@@ -39,6 +13,8 @@ env:
                                                # file, e.g. .aws/task-definition.json
   CONTAINER_NAME: container-4    # set this to the name of the container in the
                                                # containerDefinitions section of your task definition
+  SONAR_PROJECT_KEY: "tuan-pham-9207_aws"
+  SONAR_ORG_KEY: "tuan-pham-9207"
 
 permissions:
   contents: read
@@ -52,6 +28,11 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v3
+    - name: Setup JDK 17
+      uses: actions/setup-java@v3
+      with:
+          java-version: 17
+          distribution: 'zulu' # Alternative distribution options are available.
     - name: Get current time
       uses: josStorer/get-current-time@v2
       id: current-time
@@ -70,39 +51,50 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ${{ env.AWS_REGION }}
 
-    - name: Login to Amazon ECR
-      id: login-ecr
-      uses: aws-actions/amazon-ecr-login@v1
+    #- name: Check Code Coverage
+    #  run: |
+    #    coverage=$(dotnet coverage stats coverage.opencover.xml --threshold 80)
+    #    if [ "$coverage" != "success" ]; then
+    #      echo "Code coverage is below 80%. Please increase the coverage before merging."
+    #      exit 1
+    #    fi
+    #- name: Upload coverage to SonarQube
+    #  run: |
+    #    dotnet-coverage sonarqube /k:"${{env.SONAR_PROJECT_KEY}}" /o:"${{env.SONAR_ORG_KEY}}" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.cs.opencover.reportsPaths="coverage.opencover.xml" /d:sonar.coverage.exclusions="**/*.Tests/**"
 
-    - name: Build, tag, and push image to Amazon ECR
-      id: build-image
-      env:
-        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        IMAGE_TAG: dev${{ steps.current-time.outputs.formattedTime }}_${{ steps.extract_branch.outputs.branch }}_${{ github.run_number }}
-      run: |
-        # Build a docker container and
-        # push it to ECR so that it can
-        # be deployed to ECS.
-        echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-        echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
-    - name: Download task definition
-      run: |
-          aws ecs describe-task-definition --task-definition task-definition-4 \
-          --query taskDefinition > task-definition.json
-    - name: Fill in the new image ID in the Amazon ECS task definition
-      id: task-def
-      uses: aws-actions/amazon-ecs-render-task-definition@v1
-      with:
-        task-definition: task-definition.json
-        container-name: ${{ env.CONTAINER_NAME }}
-        image: ${{ steps.build-image.outputs.image }}
+    #- name: Login to Amazon ECR
+    #  id: login-ecr
+    #  uses: aws-actions/amazon-ecr-login@v1
 
-    - name: Deploy Amazon ECS task definition
-      uses: aws-actions/amazon-ecs-deploy-task-definition@v1
-      with:
-        task-definition: ${{ steps.task-def.outputs.task-definition }}
-        service: ${{ env.ECS_SERVICE }}
-        cluster: ${{ env.ECS_CLUSTER }}
-        wait-for-service-stability: true
+    #- name: Build, tag, and push image to Amazon ECR
+    #  id: build-image
+    #  env:
+    #    ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+    #    IMAGE_TAG: dev${{ steps.current-time.outputs.formattedTime }}_${{ steps.extract_branch.outputs.branch }}_${{ github.run_number }}
+    #  run: |
+    #    # Build a docker container and
+    #    # push it to ECR so that it can
+    #    # be deployed to ECS.
+    #    echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+    #    docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+    #    docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+    #    echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
+    #- name: Download task definition
+    #  run: |
+    #      aws ecs describe-task-definition --task-definition task-definition-4 \
+    #      --query taskDefinition > task-definition.json
+    #- name: Fill in the new image ID in the Amazon ECS task definition
+    #  id: task-def
+    #  uses: aws-actions/amazon-ecs-render-task-definition@v1
+    #  with:
+    #    task-definition: task-definition.json
+    #    container-name: ${{ env.CONTAINER_NAME }}
+    #    image: ${{ steps.build-image.outputs.image }}
+
+    #- name: Deploy Amazon ECS task definition
+    #  uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+    #  with:
+    #    task-definition: ${{ steps.task-def.outputs.task-definition }}
+    #    service: ${{ env.ECS_SERVICE }}
+    #    cluster: ${{ env.ECS_CLUSTER }}
+    #    wait-for-service-stability: true
