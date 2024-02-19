@@ -1,0 +1,36 @@
+name: Unit tests
+
+on:
+  push:
+    branches: [ "main","develop" ]
+
+env:
+  SONAR_PROJECT_KEY: "tuan-pham-9207_aws"
+  SONAR_ORG_KEY: "tuan-pham-9207"
+
+permissions:
+  contents: read
+
+jobs:
+  UnitTests:
+    name: Check Sonar Qube And Unit Tests
+    runs-on: ubuntu-latest
+    environment: Development
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Setup JDK 17
+      uses: actions/setup-java@v3
+      with:
+          java-version: 17
+          distribution: 'zulu' # Alternative distribution options are available.
+
+    - name: Run tests and generate coverage
+      run: |
+        dotnet tool install --global dotnet-sonarscanner
+        dotnet sonarscanner begin /k:"${{env.SONAR_PROJECT_KEY}}" /d:sonar.host.url="https://sonarcloud.io/" /o:"${{env.SONAR_ORG_KEY}}" /d:sonar.token="${{ secrets.SONAR_TOKEN }}"  /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml
+        dotnet build --no-incremental
+        dotnet tool install -g dotnet-coverage || true
+        dotnet-coverage collect "dotnet test" -f xml -o "coverage.xml"
+        dotnet sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
