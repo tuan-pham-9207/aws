@@ -1,3 +1,5 @@
+using AwsApp.Controllers;
+
 namespace UnitTest
 {
     public class Tests
@@ -10,7 +12,9 @@ namespace UnitTest
         [Test]
         public void Test1()
         {
-            Assert.Pass();
+            var test = new Test();
+            var result = test.Compare("1", "1");
+            Assert.IsTrue(result == 0);
         }
     }
 }
